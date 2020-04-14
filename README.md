@@ -64,12 +64,13 @@ As for every Pure Angular Pipe, you can take the Return value of this Pipe Trans
 ### Providing Context to the Method
 Of , you cannot only call the components methods, but also any other functions, while maintaining the correct `this` context. You can simply use the contextual syntax possibilities, including the context object as the first value in a function expression array:
 ```
-<div *ngFor="let item of items">{{[item, 'getSubtotal'] | fnCall}}
+<div *ngFor="let item of items">{{[item, 'getSubtotal'] | fnCall}}</div>
 or
-<div *ngFor="let item of items">{{[item, item.getSubtotal] | fnCall}}
+<div *ngFor="let item of items">{{[item, item.getSubtotal] | fnCall}}</div>
 ```
 By using the first option, you will get a type-safe implementation, because the function expression uses `keyof` to find all methods of your context object.
 
 ## Get started!
 
-Simply add the `FnModule` to your application and use the `FnCallPipe` in your templates.
+1. Run `npm install ngx-function-expression`
+1. Add the `FnModule` to your application and use the `FnCallPipe` in your templates.
