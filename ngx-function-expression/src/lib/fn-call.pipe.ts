@@ -1,5 +1,4 @@
-import type {PipeTransform} from '@angular/core';
-import {ChangeDetectorRef, Pipe} from '@angular/core';
+import {ChangeDetectorRef, Pipe, PipeTransform} from '@angular/core';
 import {FnEvaluationService} from './fn-evaluation.service';
 import {FunctionExpression} from './fn-function-expression.type';
 import {getExecutionContext} from './get-execution-context';

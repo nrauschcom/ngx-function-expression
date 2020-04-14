@@ -73,4 +73,4 @@ By using the first option, you will get a type-safe implementation, because the 
 ## Get started!
 
 1. Run `npm install ngx-function-expression`
-1. Add the `FnModule` to your application and use the `FnCallPipe` in your templates.
+1. Add the `FunctionExpressionModule` to your application and use the `FnCallPipe` in your templates.
