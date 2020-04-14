@@ -1,27 +1,75 @@
-# NgxFunctionExpression
+# ngx-function-expression
+This library adds a new data structure, and the tools of using it to your Angular Application: **Function Expressions**.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
+## What is it?
+Function expressions are used to call your component's functions directly in the template - without re-evaluating them on every change detection cycle.
+As I worked with Angular for some time in many teams, I realized that most of the users just go for the simplest way of doing things. This ends in template bindings like `*ngIf='hasPermission()'` - As you probably notice if you're familiar with Angular, this method ends up to be called on every change detection cycle, which is, in the worst case, **hundrets of times per second**.
 
-## Development server
+By using Function Expressions, you can reduce that to _one_ simple call, and you're even able to recompute the result of that method anytime one of the inputs change.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## How does it look like?
+Function Expressions follow a simple, yet powerful Syntax. You're currently able to use Function Expressions in four different ways:
 
-## Code scaffolding
+| Expression | Corresponds to  |
+| --- | --- |
+| `method` | `this.method()` |
+| `[method, 1, 'abc', param]` | `this.method(1, 'abc', param)` |
+| `[obj, method, param]` | `method.apply(obj, param)` |
+| `[obj, 'methodName', param]` | `obj[methodName](param)` |
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+You can simply use them in any template, using the exported `fnCall` pipe.
 
-## Build
+## Examples
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Evaluate method once
 
-## Running unit tests
+```
+<div>{{getUsername | fnCall}}</div>
+```
+This example will call the method getUsername on the controller (with `this` set to the correct controller!) exactly once and then persist the return value in the view.\
+_Note that in this exact example you should rather make the username a property of the controller to not use a function call at all._
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Evaluate method with arguments
 
-## Running end-to-end tests
+```
+<div>{{[getUsername, user] | fnCall}}</div>
+```
+This example will also call the method getUsername on the controller, with the first parameter set to `user`.\
+Note that, whenever the input variable `user` changes, the method will be re-evaluated!
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### Usage with observables
 
-## Further help
+```
+<div>{{[getUsernameObservable, (user$ | async)] | fnCall | async}}</div>
+```
+In this example, we are using an observable as input to our function, which again returns an observable consumed by the async pipe.\
+In the perfect world of Angular, we would implement this exact same example like that in our component:
+```
+public usernameObservable = this.user$.pipe(switchMap((user) => this.getUsernameObservable(user)));
+```
+You can definitely argue this logic _should_ go in the component, but lines like that are also messing up the components code and are badly read- and maintainable.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Lazy programmers could also come up with something like that:
+```
+<div>{{getUsernameObservable(user | async) | async}}</div>
+```
+which results in the outer async pipe subscribing to a new observable on every change detection cycle.
+
+## Further handling the return value
+As for every Pure Angular Pipe, you can take the Return value of this Pipe Transformation for anything you want. Look at the following examples to understand the full possibilities:
+```
+<component *ngIf="(([getPermissionStream, user | async] | fnCall) | async) === 'READ'">Yey, I have read access!</component>
+```
+
+### Providing Context to the Method
+Of , you cannot only call the components methods, but also any other functions, while maintaining the correct `this` context. You can simply use the contextual syntax possibilities, including the context object as the first value in a function expression array:
+```
+<div *ngFor="let item of items">{{[item, 'getSubtotal'] | fnCall}}
+or
+<div *ngFor="let item of items">{{[item, item.getSubtotal] | fnCall}}
+```
+By using the first option, you will get a type-safe implementation, because the function expression uses `keyof` to find all methods of your context object.
+
+## Get started!
+
+Simply add the `FnModule` to your application and use the `FnCallPipe` in your templates.

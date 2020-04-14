@@ -2,5 +2,50 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "ngx-function-expression": {
+      "projectType": "library",
+      "root": "ngx-function-expression",
+      "sourceRoot": "ngx-function-expression/src",
+      "prefix": "fn",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "ngx-function-expression/tsconfig.lib.json",
+            "project": "ngx-function-expression/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "ngx-function-expression/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "ngx-function-expression/src/test.ts",
+            "tsConfig": "ngx-function-expression/tsconfig.spec.json",
+            "karmaConfig": "ngx-function-expression/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "ngx-function-expression/tsconfig.lib.json",
+              "ngx-function-expression/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ngx-function-expression",
+  "cli": {
+    "analytics": false
+  }
 }

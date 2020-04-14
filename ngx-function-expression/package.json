@@ -1,0 +1,29 @@
+{
+  "name": "ngx-function-expression",
+  "version": "1.0.0",
+  "description": "Performant calls to local functions in Angular Bindings",
+  "author": {
+    "name": "Nico Rausch",
+    "email": "rausch.nico@gmail.com",
+    "url": "https://nrausch.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nrauschcom/ngx-function-expression.git"
+  },
+  "bugs": "https://github.com/nrauschcom/ngx-function-expression/issues",
+  "homepage": "https://github.com/nrauschcom/ngx-function-expression",
+  "keywords": [
+    "angular",
+    "template",
+    "function",
+    "performance",
+    "javascript",
+    "typescript"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": ">= 8.0.0 < 10",
+    "@angular/core": ">= 8.0.0 < 10"
+  }
+}
