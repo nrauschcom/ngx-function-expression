@@ -10,7 +10,7 @@ By using Function Expressions, you can reduce that to _one_ simple call, and you
 ## Get started!
 
 1. Run `npm install ngx-function-expression`
-1. Simply add the `FnModule` to your application and use the `FnCallPipe` in your templates.
+1. Simply add the `FunctionExpressionModule` to your application and use the `FnCallPipe` in your templates.
 
 
 **Full Documentation, Examples and Issue Tracker can be found on GitHub.**
