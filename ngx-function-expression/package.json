@@ -25,5 +25,8 @@
   "peerDependencies": {
     "@angular/common": ">= 8.0.0 < 10",
     "@angular/core": ">= 8.0.0 < 10"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
   }
 }
