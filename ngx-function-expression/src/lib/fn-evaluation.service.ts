@@ -8,7 +8,13 @@ export class FnEvaluationService {
 
   private warningsEnabled = isDevMode();
 
-  private static checkContext(context: object, fnName: string): void {
+  private static checkContext(context: unknown, fnName: string): void {
+    if (!context) {
+      console.warn(`You are calling a method ${fnName} without any context object. If you are using an unsupported version of Angular, `
+        + `you always have to specify the context of a method execution like [this, method, ...] instead of the automatic context resolving in `
+        + `in ngx-function-expression. This warning appears in the development environment only. If you do exactly know what you're doing, `
+        + `you can, however, turn it off using FnEvaluationService.suppressWarnings().`);
+    }
     if (context && typeof context[fnName] !== 'function') {
       console.warn(`The method "${fnName}" should probably not be executed in the given context "${context.constructor.name}". `
         + `This warning appears in the development environment only. If you do exactly know what you're doing, you can, however, turn it `
@@ -34,7 +40,7 @@ export class FnEvaluationService {
       );
   }
 
-  resolveFunctionExpression<TReturn>(expr: FunctionExpression<TReturn>, context?: object): TReturn {
+  resolveFunctionExpression<TReturn>(expr: FunctionExpression<TReturn>, context?: unknown): TReturn {
     if (Array.isArray(expr) && expr[0] instanceof Object) {
       if (expr[0] instanceof Function) {
         if (this.warningsEnabled) {
