@@ -7,6 +7,7 @@ import {FnEvaluationService} from '../lib/fn-evaluation.service';
 import createSpy = jasmine.createSpy;
 
 @Component({
+  selector: 'test-host',
   template: '{{activeFunctionExpression | fnCall}}'
 })
 export class TestHostComponent {
