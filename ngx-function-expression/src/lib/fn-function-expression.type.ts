@@ -10,7 +10,7 @@ type FunctionExpressionWithArguments<R, F extends Fun<R> = Fun<R>> = [Fun<R>, ..
  * A method call expression with given context.
  * This is used like `[containingObj, 'methodName', param1, param2, ...]`
  */
-type MethodFunctionExpression<R, O, K = keyof Extract<O, (...args: unknown[]) => R>>
+type MethodFunctionExpression<R, O, K = keyof Extract<O, Fun<R>>>
   = [O, K, ...unknown[]];
 
 /**
@@ -26,8 +26,10 @@ type ContextFunctionExpression<R, O> = [O, Fun<R>, ...unknown[]];
 type SimplifiedSyntax<R> = () => R;
 
 
-export type FunctionExpression<R> =
+export type FunctionExpression<R, O = unknown> =
   FunctionExpressionWithArguments<R>
-  | ContextFunctionExpression<R, unknown>
-  | MethodFunctionExpression<R, unknown>
+  | ContextFunctionExpression<R, O>
+  | MethodFunctionExpression<R, O>
   | SimplifiedSyntax<R>;
+
+export type FunctionExpressionReturnValue<T> = T extends FunctionExpression<infer R> ? R : never;

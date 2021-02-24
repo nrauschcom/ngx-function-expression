@@ -3,9 +3,10 @@ import {TestBed} from '@angular/core/testing';
 import {FnEvaluationService} from '../lib/fn-evaluation.service';
 import {SpyChangeDetectorRef} from './spies';
 import createSpy = jasmine.createSpy;
+import {FunctionExpression} from "../lib/fn-function-expression.type";
 
 describe('Pipe: fnCall', () => {
-  let callPipe: FnCallPipe<unknown>;
+  let callPipe: FnCallPipe<any>;
   let changeDetectorRef: any;
 
   beforeEach(async () => {
@@ -14,7 +15,7 @@ describe('Pipe: fnCall', () => {
     });
     TestBed.inject(FnEvaluationService).suppressWarnings();
     changeDetectorRef = new SpyChangeDetectorRef();
-    callPipe = new FnCallPipe(TestBed.inject(FnEvaluationService), changeDetectorRef);
+    callPipe = new FnCallPipe(changeDetectorRef, TestBed.inject(FnEvaluationService));
   });
 
   it('create an instance', () => {
@@ -44,11 +45,12 @@ describe('Pipe: fnCall', () => {
   });
 
   it('should call given contextual method expression', () => {
-    const spy = createSpy();
+    const spy = createSpy('test', (..._: unknown[]) => 1);
     const ctx = {
       method: spy
     };
-    callPipe.transform([ctx, 'method', 2, 3, 4]);
+    const fnExpr: FunctionExpression<string> = [ctx, 'method', 2, 3, 4];
+    callPipe.transform(fnExpr);
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith(2, 3, 4);
     expect(spy.calls.first().object).toBe(ctx);

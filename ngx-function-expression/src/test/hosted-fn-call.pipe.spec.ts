@@ -83,6 +83,18 @@ describe('Hosted Pipe: fnCall', () => {
     expect(spy.calls.first().object).toBe(object);
   });
 
+  it('should correctly infer types', async () => {
+    const fixture = TestBed.createComponent(TestHostComponent);
+    const object = {
+      method: jasmine.createSpy('method', (_: number) => 1).and.returnValue(1)
+    }
+    fixture.componentInstance.setExpression([object, 'method', 1]);
+    fixture.detectChanges();
+    expect(object.method).toHaveBeenCalledTimes(1);
+    expect(object.method).toHaveBeenCalledWith(1);
+    expect(object.method.calls.first().object).toBe(object);
+  });
+
   it('should work with method expressions', async () => {
     const fixture = TestBed.createComponent(TestHostComponent);
     const spy = createSpy();
