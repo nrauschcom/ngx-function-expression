@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Pipe, PipeTransform} from '@angular/core';
 import {FnEvaluationService} from './fn-evaluation.service';
-import {FunctionExpression, FunctionExpressionReturnValue} from './fn-function-expression.type';
+import {FunctionExpression} from './fn-function-expression.type';
 import {getExecutionContext} from './get-execution-context';
 
 /**
@@ -81,14 +81,12 @@ import {getExecutionContext} from './get-execution-context';
   name: 'fnCall',
   pure: true
 })
-export class FnCallPipe<K extends FunctionExpression<unknown>> implements PipeTransform {
-
+export class FnCallPipe<T> implements PipeTransform {
   constructor(private changeDetectorRef: ChangeDetectorRef, private evaluationService: FnEvaluationService) {
   }
 
-  transform(value: K, ...args: unknown[]): FunctionExpressionReturnValue<K> {
-    return this.evaluationService.resolveFunctionExpression<FunctionExpressionReturnValue<K>>
-      (value as FunctionExpression<FunctionExpressionReturnValue<K>>, getExecutionContext(this.changeDetectorRef));
+  transform(value: FunctionExpression<T>, ...args: unknown[]): T {
+    return this.evaluationService.resolveFunctionExpression<T>(value, getExecutionContext(this.changeDetectorRef));
   }
 
 }

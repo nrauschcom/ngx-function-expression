@@ -1,6 +1,6 @@
 {
   "name": "ngx-function-expression",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Performant calls to local functions in Angular Bindings",
   "author": {
     "name": "Nico Rausch",
@@ -23,8 +23,8 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">= 8.0.0 < 11",
-    "@angular/core": ">= 8.0.0 < 11"
+    "@angular/common": ">= 9.0.0 < 12",
+    "@angular/core": ">= 9.0.0 < 12"
   },
   "dependencies": {
     "tslib": "^2.0.0"

@@ -1,4 +1,8 @@
-type Fun<R, Args extends unknown[] = unknown[]> = (...args: Args) => R;
+type Fun<R, Args extends Array<unknown> = Array<unknown>> = (...args: Args) => R;
+
+export type ExtractMethods<O, R = any> = {
+  [K in keyof O]: O[K] extends Fun<R> ? K : never
+}[keyof O];
 
 /**
  * A function expression with parameters with a return value of type R.
@@ -10,8 +14,8 @@ type FunctionExpressionWithArguments<R, F extends Fun<R> = Fun<R>> = [Fun<R>, ..
  * A method call expression with given context.
  * This is used like `[containingObj, 'methodName', param1, param2, ...]`
  */
-type MethodFunctionExpression<R, O, K = keyof Extract<O, Fun<R>>>
-  = [O, K, ...unknown[]];
+type MethodFunctionExpression<R, O>
+  = [O, ExtractMethods<O, R>, ...unknown[]];
 
 /**
  * A method call expression with given context.
@@ -31,5 +35,3 @@ export type FunctionExpression<R, O = unknown> =
   | ContextFunctionExpression<R, O>
   | MethodFunctionExpression<R, O>
   | SimplifiedSyntax<R>;
-
-export type FunctionExpressionReturnValue<T> = T extends FunctionExpression<infer R> ? R : never;
