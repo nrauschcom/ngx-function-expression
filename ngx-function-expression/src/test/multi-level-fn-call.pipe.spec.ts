@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, Input, ViewChild} from "@angular/cor
 import {TestBed} from "@angular/core/testing";
 import {FnCallPipe} from "../lib/fn-call.pipe";
 import {Observable, of} from "rxjs";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'test-component',

@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {FnCallPipe} from '../lib/fn-call.pipe';
 import {Component} from '@angular/core';
-import {ExtractMethods, FunctionExpression} from '../lib/fn-function-expression.type';
+import {FunctionExpression} from '../lib/fn-function-expression.type';
 import {BehaviorSubject} from 'rxjs';
 import {FnEvaluationService} from '../lib/fn-evaluation.service';
 import createSpy = jasmine.createSpy;

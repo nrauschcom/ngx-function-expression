@@ -6,7 +6,7 @@ import createSpy = jasmine.createSpy;
 import {FunctionExpression} from "../lib/fn-function-expression.type";
 
 describe('Pipe: fnCall', () => {
-  let callPipe: FnCallPipe<any>;
+  let callPipe: FnCallPipe;
   let changeDetectorRef: any;
 
   beforeEach(async () => {

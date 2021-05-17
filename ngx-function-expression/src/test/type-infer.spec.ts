@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, ViewChild} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 import {TestBed} from "@angular/core/testing";
 import {FnCallPipe} from "../lib/fn-call.pipe";
 import {Observable, of} from "rxjs";
@@ -21,12 +21,12 @@ export class TestComponent {
   static instance: TestComponent;
   public instance = this;
 
-  constructor() {
+  constructor(fnCall: FnCallPipe) {
     TestComponent.instance = this;
   }
 
-  fn(a: number): string {
-    return 'abc1';
+  fn(a: number, str: string): Observable<number> {
+    return of(1);
   }
 }
 
