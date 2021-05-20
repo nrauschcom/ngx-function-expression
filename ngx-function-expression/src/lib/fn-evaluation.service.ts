@@ -1,12 +1,16 @@
 import {Injectable, isDevMode} from '@angular/core';
-import {FunctionExpression} from './fn-function-expression.type';
+import {FunctionExpression} from './function-expression.type';
 
+/**
+ * @deprecated since 2.0
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class FnEvaluationService {
 
   private warningsEnabled = isDevMode();
+  private shownDeprecationWaring = false;
 
   private static checkContext(context: unknown, fnName: string): void {
     if (!context) {
@@ -40,7 +44,16 @@ export class FnEvaluationService {
       );
   }
 
-  resolveFunctionExpression<TReturn>(expr: FunctionExpression<TReturn>, context?: unknown): TReturn {
+  resolveLegacyFunctionExpression<TReturn>(expr: FunctionExpression<TReturn>, context?: unknown): TReturn {
+    if (this.warningsEnabled && !this.shownDeprecationWaring) {
+      console.warn('[deprecation] ngx-function-expression');
+      console.warn('The use of FnEvaluationService and the fnCall pipe is deprecated since version 2.0 and will be' +
+        'removed in 2.1.\nOur suggested way of using ngx-function-expression is switching to the new fnApply pipe.\n' +
+        'You can read more about the migration here: ' +
+        'https://github.com/nrauschcom/ngx-function-expression/blob/2.x/MIGRATION_TO_V2.md\n\n' +
+        'You\'re seeing this warning, because you are in devMode. In your production build, this deprecation warning ' +
+        'will not show up.');
+    }
     if (Array.isArray(expr) && expr[0] instanceof Object) {
       if (expr[0] instanceof Function) {
         if (this.warningsEnabled) {

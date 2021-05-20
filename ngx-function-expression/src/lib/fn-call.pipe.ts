@@ -6,7 +6,7 @@ import {
   FunctionExpression,
   FunctionExpressionWithArguments,
   MethodFunctionExpression, SimplifiedSyntax
-} from './fn-function-expression.type';
+} from './function-expression.type';
 import {getExecutionContext} from './get-execution-context';
 
 /**
@@ -82,6 +82,8 @@ import {getExecutionContext} from './get-execution-context';
  * In this example, `anotherFunction` will be called whenever `localVar` changes, which will, again, trigger the
  * evaluation of `localFunction` with the return value. This is comparable to just stacking the functions in the
  * component itself like `this.localFunction(this.anotherFunction(this.localVar))`.
+ *
+ * @deprecated since 2.0
  */
 @Pipe({
   name: 'fnCall',
@@ -91,12 +93,62 @@ export class FnCallPipe implements PipeTransform {
   constructor(private changeDetectorRef: ChangeDetectorRef, private evaluationService: FnEvaluationService) {
   }
 
+  /**
+   * @deprecated since 2.0
+   *
+   * This method is **deprecated** since ngx-function-expression@2.0 and it is **highly encouraged** to migrate to
+   * Version 2.x - If you rely heavily on using the legacy pipe, you can use the 1.x branch of ngx-function-expression.
+   *
+   * The preferred way of using ngx-function-expression is the new {@link fnApply} pipe, which provides a completely
+   * type-safe implementation. You can read more about the transition from 1.x to 2.x in
+   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/MIGRATION_TO_V2.md}
+   */
   transform<T>(value: SimplifiedSyntax<T>, ...args: unknown[]): T;
+  /**
+   * @deprecated since 2.0
+   *
+   * This method is **deprecated** since ngx-function-expression@2.0 and it is **highly encouraged** to migrate to
+   * Version 2.x - If you rely heavily on using the legacy pipe, you can use the 1.x branch of ngx-function-expression.
+   *
+   * The preferred way of using ngx-function-expression is the new {@link fnApply} pipe, which provides a completely
+   * type-safe implementation. You can read more about the transition from 1.x to 2.x in
+   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/MIGRATION_TO_V2.md}
+   */
   transform<T extends FunctionExpressionWithArguments<any>>(value: T, ...args: unknown[]): FnReturnType<T>;
+  /**
+   * @deprecated since 2.0
+   *
+   * This method is **deprecated** since ngx-function-expression@2.0 and it is **highly encouraged** to migrate to
+   * Version 2.x - If you rely heavily on using the legacy pipe, you can use the 1.x branch of ngx-function-expression.
+   *
+   * The preferred way of using ngx-function-expression is the new {@link fnApply} pipe, which provides a completely
+   * type-safe implementation. You can read more about the transition from 1.x to 2.x in
+   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/MIGRATION_TO_V2.md}
+   */
   transform<T extends MethodFunctionExpression<any, any>>(value: T, ...args: unknown[]): FnReturnType<T>;
+  /**
+   * @deprecated since 2.0
+   *
+   * This method is **deprecated** since ngx-function-expression@2.0 and it is **highly encouraged** to migrate to
+   * Version 2.x - If you rely heavily on using the legacy pipe, you can use the 1.x branch of ngx-function-expression.
+   *
+   * The preferred way of using ngx-function-expression is the new {@link fnApply} pipe, which provides a completely
+   * type-safe implementation. You can read more about the transition from 1.x to 2.x in
+   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/MIGRATION_TO_V2.md}
+   */
   transform<T extends ContextFunctionExpression<any, any>>(value: T, ...args: unknown[]): FnReturnType<T>;
+  /**
+   * @deprecated since 2.0
+   *
+   * This method is **deprecated** since ngx-function-expression@2.0 and it is **highly encouraged** to migrate to
+   * Version 2.x - If you rely heavily on using the legacy pipe, you can use the 1.x branch of ngx-function-expression.
+   *
+   * The preferred way of using ngx-function-expression is the new {@link fnApply} pipe, which provides a completely
+   * type-safe implementation. You can read more about the transition from 1.x to 2.x in
+   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/ngx-function-expression/MIGRATION_TO_V2.md}
+   */
   transform<T>(value: FunctionExpression<T>, ...args: unknown[]): T {
-    return this.evaluationService.resolveFunctionExpression<T>(value, getExecutionContext(this.changeDetectorRef));
+    return this.evaluationService.resolveLegacyFunctionExpression<T>(value, getExecutionContext(this.changeDetectorRef));
   }
 
 }
