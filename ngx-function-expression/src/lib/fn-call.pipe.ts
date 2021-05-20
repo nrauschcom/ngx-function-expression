@@ -101,7 +101,7 @@ export class FnCallPipe implements PipeTransform {
    *
    * The preferred way of using ngx-function-expression is the new {@link fnApply} pipe, which provides a completely
    * type-safe implementation. You can read more about the transition from 1.x to 2.x in
-   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/MIGRATION_TO_V2.md}
+   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/ngx-function-expression/MIGRATION_TO_V2.md}
    */
   transform<T>(value: SimplifiedSyntax<T>, ...args: unknown[]): T;
   /**
@@ -112,7 +112,7 @@ export class FnCallPipe implements PipeTransform {
    *
    * The preferred way of using ngx-function-expression is the new {@link fnApply} pipe, which provides a completely
    * type-safe implementation. You can read more about the transition from 1.x to 2.x in
-   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/MIGRATION_TO_V2.md}
+   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/ngx-function-expression/MIGRATION_TO_V2.md}
    */
   transform<T extends FunctionExpressionWithArguments<any>>(value: T, ...args: unknown[]): FnReturnType<T>;
   /**
@@ -123,7 +123,7 @@ export class FnCallPipe implements PipeTransform {
    *
    * The preferred way of using ngx-function-expression is the new {@link fnApply} pipe, which provides a completely
    * type-safe implementation. You can read more about the transition from 1.x to 2.x in
-   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/MIGRATION_TO_V2.md}
+   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/ngx-function-expression/MIGRATION_TO_V2.md}
    */
   transform<T extends MethodFunctionExpression<any, any>>(value: T, ...args: unknown[]): FnReturnType<T>;
   /**
@@ -134,7 +134,7 @@ export class FnCallPipe implements PipeTransform {
    *
    * The preferred way of using ngx-function-expression is the new {@link fnApply} pipe, which provides a completely
    * type-safe implementation. You can read more about the transition from 1.x to 2.x in
-   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/MIGRATION_TO_V2.md}
+   * {@link https://github.com/nrauschcom/ngx-function-expression/blob/2.x/ngx-function-expression/MIGRATION_TO_V2.md}
    */
   transform<T extends ContextFunctionExpression<any, any>>(value: T, ...args: unknown[]): FnReturnType<T>;
   /**
