@@ -19,7 +19,7 @@ export class TestHostComponent {
 }
 
 @Component({
-  template: '{{activeFunctionExpression | fnApply | async}}'
+  template: '{{activeFunctionExpression | fnCall | async}}'
 })
 export class AsyncTestHostComponent {
   activeFunctionExpression: FunctionExpression<any> = null;
