@@ -11,7 +11,7 @@
       "path": "./ngx-function-expression/tsconfig.lib.json"
     },
     {
-      "path": "./ngx-function-expression/tsconfig.spec.json"
+      "path": "./ngx-function-expression/src/test/tsconfig.spec.json"
     }
   ]
 }

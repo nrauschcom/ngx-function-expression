@@ -3,7 +3,8 @@ import {TestBed} from '@angular/core/testing';
 import {FnEvaluationService} from '../lib/fn-evaluation.service';
 import {SpyChangeDetectorRef} from './spies';
 import createSpy = jasmine.createSpy;
-import {FunctionExpression} from "../lib/fn-function-expression.type";
+import {FunctionExpression} from "../lib/function-expression.type";
+import {FnApplyPipe} from "../lib/fn-apply.pipe";
 
 describe('Pipe: fnCall', () => {
   let callPipe: FnCallPipe;

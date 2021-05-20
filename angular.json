@@ -25,7 +25,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "ngx-function-expression/src/test.ts",
-            "tsConfig": "ngx-function-expression/tsconfig.spec.json",
+            "tsConfig": "ngx-function-expression/src/test/tsconfig.spec.json",
             "karmaConfig": "ngx-function-expression/karma.conf.js"
           }
         },

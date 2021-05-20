@@ -28,10 +28,10 @@ describe('FnEvaluationService', () => {
   });
 
   it('should throw for invalid input', () => {
-    expect(() => service.resolveFunctionExpression(['isValidFunctionExpression'] as any)).toThrow();
-    expect(() => service.resolveFunctionExpression(5 as any)).toThrow();
-    expect(() => service.resolveFunctionExpression('hello' as any)).toThrow();
-    expect(() => service.resolveFunctionExpression(service as any)).toThrow();
+    expect(() => service.resolveLegacyFunctionExpression(['isValidFunctionExpression'] as any)).toThrow();
+    expect(() => service.resolveLegacyFunctionExpression(5 as any)).toThrow();
+    expect(() => service.resolveLegacyFunctionExpression('hello' as any)).toThrow();
+    expect(() => service.resolveLegacyFunctionExpression(service as any)).toThrow();
   });
 
   it('should identify and warn wrong usage of methods', () => {
@@ -40,10 +40,21 @@ describe('FnEvaluationService', () => {
     function test() {
     }
 
-    service.resolveFunctionExpression([{}, test]);
+    service.resolveLegacyFunctionExpression([{}, test]);
     expect(spy).toHaveBeenCalled();
-    expect(spy.calls.first().args[0]).toEqual('The method "test" should probably not be executed in the given context "Object". ' +
+    expect(spy.calls.argsFor(2)[0]).toEqual('The method "test" should probably not be executed in the given context "Object". ' +
       'This warning appears in the development environment only. If you do exactly know what you\'re doing, you can, however, ' +
       'turn it off using FnEvaluationService.suppressWarnings().');
+  });
+
+  it('should show deprecation warning', () => {
+    const spy = spyOn(console, 'warn');
+
+    function test() {
+    }
+
+    service.resolveLegacyFunctionExpression([{}, test]);
+    expect(spy).toHaveBeenCalled();
+    expect(spy.calls.argsFor(0)[0]).toEqual('[deprecation] ngx-function-expression');
   });
 });
