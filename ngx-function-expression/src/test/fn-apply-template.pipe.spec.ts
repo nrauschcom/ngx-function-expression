@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {fakeAsync, TestBed} from "@angular/core/testing";
 import {FnApplyPipe} from "../lib/fn-apply.pipe";
-import {FnApplyAsyncPipe} from "../lib/fn-async-apply.pipe";
+import {FnApplyAsyncPipe} from "../lib/fn-apply-async.pipe";
 import {
   FunctionParameters,
   ObservableParameters,
