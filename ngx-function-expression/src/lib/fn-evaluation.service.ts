@@ -10,7 +10,7 @@ import {FunctionExpression} from './function-expression.type';
 export class FnEvaluationService {
 
   private warningsEnabled = isDevMode();
-  private shownDeprecationWaring = false;
+  private shownDeprecationWarning = false;
 
   private static checkContext(context: unknown, fnName: string): void {
     if (!context) {
@@ -45,10 +45,11 @@ export class FnEvaluationService {
   }
 
   resolveLegacyFunctionExpression<TReturn>(expr: FunctionExpression<TReturn>, context?: unknown): TReturn {
-    if (this.warningsEnabled && !this.shownDeprecationWaring) {
+    if (this.warningsEnabled && !this.shownDeprecationWarning) {
+      this.shownDeprecationWarning = true;
       console.warn('[deprecation] ngx-function-expression');
       console.warn('The use of FnEvaluationService and the fnCall pipe is deprecated since version 2.0 and will be' +
-        'removed in 2.1.\nOur suggested way of using ngx-function-expression is switching to the new fnApply pipe.\n' +
+        ' removed in 2.1.\nOur suggested way of using ngx-function-expression is switching to the new fnApply pipe.\n' +
         'You can read more about the migration here: ' +
         'https://github.com/nrauschcom/ngx-function-expression/blob/2.x/MIGRATION_TO_V2.md\n\n' +
         'You\'re seeing this warning, because you are in devMode. In your production build, this deprecation warning ' +
