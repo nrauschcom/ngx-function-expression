@@ -34,6 +34,17 @@ describe('FnEvaluationService', () => {
     expect(() => service.resolveLegacyFunctionExpression(service as any)).toThrow();
   });
 
+  it('should warn if no context is given', () => {
+    const spy = spyOn(console, 'warn');
+
+    function test() {
+    }
+
+    service.resolveLegacyFunctionExpression([test], undefined);
+    expect(spy).toHaveBeenCalled();
+    expect(spy.calls.argsFor(2)[0]).toEqual(jasmine.stringMatching(/^You are calling a method/));
+  });
+
   it('should identify and warn wrong usage of methods', () => {
     const spy = spyOn(console, 'warn');
 
@@ -45,6 +56,23 @@ describe('FnEvaluationService', () => {
     expect(spy.calls.argsFor(2)[0]).toEqual('The method "test" should probably not be executed in the given context "Object". ' +
       'This warning appears in the development environment only. If you do exactly know what you\'re doing, you can, however, ' +
       'turn it off using FnEvaluationService.suppressWarnings().');
+  });
+
+  it('should work with named methods', () => {
+    const obj = {
+      test: () => 45
+    }
+
+    const spy = spyOn(obj, 'test').and.callThrough();
+
+    service.resolveLegacyFunctionExpression([obj, 'test']);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should throw on invalid expression', () => {
+    const obj = {}
+
+    expect(() => service.resolveLegacyFunctionExpression([obj, 3 as unknown as string])).toThrow();
   });
 
   it('should show deprecation warning', () => {

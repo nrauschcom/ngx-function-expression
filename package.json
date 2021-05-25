@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "ci-test": "ng test --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage",
+    "coveralls": "npm run ci-test && cat ./coverage/ngx-function-expression | coveralls"
   },
   "private": true,
   "dependencies": {
@@ -38,13 +40,14 @@
     "@typescript-eslint/eslint-plugin-tslint": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
     "codelyzer": "^6.0.2",
+    "coveralls": "^3.1.0",
     "eslint": "^7.26.0",
     "eslint-plugin-prettier": "^3.4.0",
     "jasmine-core": "~3.7.1",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "^6.3.2",
     "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage-istanbul-reporter": "~3.0.3",
+    "karma-coverage": "^2.0.3",
     "karma-jasmine": "~4.0.1",
     "karma-jasmine-html-reporter": "^1.6.0",
     "ng-packagr": "^12.0.0",
