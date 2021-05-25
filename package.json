@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ci-test": "ng test --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage",
-    "coveralls": "npm run ci-test && cat ./coverage/ngx-function-expression | coveralls"
+    "coveralls": "npm run ci-test && cat ./coverage/ngx-function-expression/lcov.info | coveralls"
   },
   "private": true,
   "dependencies": {
