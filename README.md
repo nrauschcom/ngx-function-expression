@@ -1,4 +1,11 @@
 # ngx-function-expression
+
+![Build Status](https://img.shields.io/travis/com/nrauschcom/ngx-function-expression?style=for-the-badge)
+![Code Coverage](https://img.shields.io/coveralls/github/nrauschcom/ngx-function-expression?style=for-the-badge)
+![GitHub issues](https://img.shields.io/github/issues/nrauschcom/ngx-function-expression?style=for-the-badge)    
+![Bundle Size](https://img.shields.io/bundlephobia/min/ngx-function-expression?style=for-the-badge)
+![License](https://img.shields.io/github/license/nrauschcom/ngx-function-expression?style=for-the-badge)
+
 This library adds new pipes to your Angular Application:
 Function Application Pipes (or earlier: Function Expressions).
 
