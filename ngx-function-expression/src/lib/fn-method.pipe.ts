@@ -51,6 +51,6 @@ export class FnMethodPipe implements PipeTransform {
    */
   transform<C, M extends keyof C & UnparametrizedMethods<C>>(context: C, method: M, args?: []): MethodReturnType<C, M>;
   transform<C, M extends Methods<C>>(context: C, method: M, args: MethodParameters<C, M>): MethodReturnType<C, M> {
-    return _fnApplyHelper(context, context[method], args) as MethodReturnType<C, M>;
+    return _fnApplyHelper(context, context[method as string], args) as MethodReturnType<C, M>;
   }
 }
