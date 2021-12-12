@@ -38,7 +38,7 @@ up with this module. And I hope, someone out here will read this and think "that
 ### Applying Pure Functions in the Template
 ```ts
 @Component({
-  template: '{{pow | [3, 2]}}, {{math_pow | [4, 2]}}' // will render '9, 16'
+  template: '{{pow | fnApply:[3, 2]}}, {{math_pow | fnApply:[4, 2]}}' // will render '9, 16'
 })
 class TestComponent {
     public math_pow = Math.pow;

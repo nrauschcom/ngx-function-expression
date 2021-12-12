@@ -130,7 +130,7 @@ example, because the syntax is more similar to a normal method call.
 ### Applying Pure Functions in the Template
 ```ts
 @Component({
-  template: '{{pow | [3, 2]}}, {{math_pow | [4, 2]}}' // will render '9, 16'
+  template: '{{pow | fnApply:[3, 2]}}, {{math_pow | fnApply:[4, 2]}}' // will render '9, 16'
 })
 class TestComponent {
     public math_pow = Math.pow;
@@ -200,6 +200,10 @@ class TestComponent {
 Feel free to use GitHub issues for further questions, suggestions, feature requests and bug reports.
 
 I'm happy to make this module useful to as many people as possible!
+
+## Changelog
+
+See [CHANGELOG.md](https://github.com/nrauschcom/ngx-function-expression/blob/master/CHANGELOG.md)
 
 ## Known Issues
 
