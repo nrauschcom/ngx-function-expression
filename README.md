@@ -163,23 +163,14 @@ This can simplify several use-cases where other solutions are overly verbose or 
 ```ts
 @Component({
   template: `<div *ngFor="let listItem of list"
-                  [class.selected]="isSelected | fnApply:listItem"
-                  (click)="toggle(listItem)">`
+                  [hidden]="!(hasPermissionsForItem | fnApply:listItem)">`
 })
 class ListComponent {
     public list: ListItem[];
-    private selectionModel: Set<ListItem>;
+    private user: User;
     
-    isSelected(listItem: ListItem): boolean {
-        return this.selectionModel.has(listItem);
-    }
-    
-    toggle(listItem: ListItem): void {
-        if (this.isSelected(listItem)) {
-            this.selectionModel.delete(listItem);
-        } else {
-            this.selectionModel.add(listItem);
-        }
+    public hasPermissionsForItem(listItem: ListItem): boolean {
+        return this.user.permissions.check(listItem);
     }
 }
 ```
@@ -197,7 +188,7 @@ ngx-function-expression will always try to infer the parameter types and the ret
     {{(add | fnApply:[1, 2])}}       // Works fine
   `
 })
-class ListComponent {
+class ComplexMathsComponent implements PunIntended {
     public add(l: number, r: number) {
       return l + r;
     }
