@@ -1,6 +1,6 @@
 {
   "name": "ngx-function-expression",
-  "version": "13.0.0",
+  "version": "13.1.0",
   "description": "Performant calls to pure functions in Angular Templates / Bindings",
   "author": {
     "name": "Nico Rausch",
@@ -22,14 +22,15 @@
     "performance",
     "javascript",
     "typescript",
-    "change detection"
+    "change detection",
+    "memoization"
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">= 9.0.0",
-    "@angular/core": ">= 9.0.0"
+    "@angular/common": ">= 12.0.0",
+    "@angular/core": ">= 12.0.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.3.0"
   }
 }

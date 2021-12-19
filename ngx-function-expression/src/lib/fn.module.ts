@@ -1,12 +1,11 @@
 import {NgModule} from '@angular/core';
 import {FnApplyPipe} from "./fn-apply.pipe";
-import {FnApplyAsyncPipe} from "./fn-apply-async.pipe";
 import {FnMethodPipe} from "./fn-method.pipe";
 
 @NgModule({
-  declarations: [FnApplyPipe, FnApplyAsyncPipe, FnMethodPipe],
+  declarations: [FnApplyPipe, FnMethodPipe],
   imports: [],
-  exports: [FnApplyPipe, FnApplyAsyncPipe, FnMethodPipe]
+  exports: [FnApplyPipe, FnMethodPipe]
 })
 export class FunctionExpressionModule {
 }

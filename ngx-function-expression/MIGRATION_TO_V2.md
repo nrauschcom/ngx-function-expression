@@ -103,5 +103,5 @@ in favor of simplification and to prevent ambiguity.
 ## New Features
 
 To further simplify the usage of ngx-function-expression, I added some utility functions to 2.x.
-You can read more about the new pipes fnMethod and fnApplyAsync in the
+You can read more about the new pipe fnMethod in the 
 [README](https://github.com/nrauschcom/ngx-function-expression/blob/2.x/README.md).

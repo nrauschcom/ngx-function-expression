@@ -1,4 +1,4 @@
-# ngx-function-expression
+## Performant Pure Function Calls in Angular Templates
 
 ![Build Status](https://img.shields.io/travis/com/nrauschcom/ngx-function-expression?style=for-the-badge)
 ![Code Coverage](https://img.shields.io/coveralls/github/nrauschcom/ngx-function-expression?style=for-the-badge)
@@ -6,34 +6,25 @@
 ![Bundle Size](https://img.shields.io/bundlephobia/min/ngx-function-expression?style=for-the-badge)
 ![License](https://img.shields.io/github/license/nrauschcom/ngx-function-expression?style=for-the-badge)
 
-This library adds new pipes to your Angular Application:
-Function Application Pipes (or earlier: Function Expressions).
+>**Warning:** For Angular Versions < 13, please use ngx-function-expression@^2.0.0, because the package is Ivy-only as of Dec 2021.
 
-## Function Application? Why?
-... you may ask yourself.
-Let's look at a small example:
+***
 
-```ts
-@Component({
-  template: '{{user.getName()}} <i *ngIf="user.hasEditPermission()" class="fa fa-pencil" (click)="edit()">'
-})
-```
-You probably already know you should avoid such code, but why?  
-Angular provides the developer with a handy technique: **Change Detection**. Whenever Template
-Inputs change, the result is evaluated and shown to the user. But how does Angular know whether `user.getName()`
-changes? Right: _It doesn't_. And because of that, this function is called in every "tick", depending
-on your configuration on every mousemove event, every keypress, or just for every frame your application is rendered.
-It's maybe not too bad for a plain getter, but you know just like me, this can get out of hands very quickly.
+Using Functions in Angular Templates is a double-edged sword.
 
-But what if you want to just evaluate a method _once_? Or even better: Once for each combination of arguments you
-pass. That's where Pipes come into place. Angular Pure Pipes essentially tell the compiler: As long as my inputs don't
-change, my outputs won't change either. Angular Pipes are probably the perfect solution to your problem - but they come
-with their own caveats. Each Pipe has to be defined as part of a module, not local to just your component. You will
-have to pass component state to your pipe in some cases, or you just don't want to implement pipes for every small
-helper function.
+While you can significantly reduce your template code by putting logic in component methods, this idea comes with its own pitfalls:
+Because you can't mark a method as [pure](https://en.wikipedia.org/wiki/Pure_function), Angular will keep calling that method
+in every change detection cycle, waiting for the outputs to change, resulting in a huge amount of function calls.
 
-So I spent some days working on possible solutions for all the cases in which I needed better capabilities, and I came
-up with this module. And I hope, someone out here will read this and think "that's exactly what I need right now".
+By using ngx-function-expression, you are allowing Angular to [memoize](https://en.wikipedia.org/wiki/Memoization)
+the result of your function calls as long as the parameters don't change.
+
+This library comes with the following benefits:
+ - [Component-scoped method calls](#component-scoped-method-calls) with the correct "this" context
+ - [Simple usage](#short-summary-on-how-to-achieve-your-goal) with any kind of methods and parameters
+ - [Type-safe](#type-safe-template-usage) template usage
+ 
+***
 
 ## Basic Syntax
 
@@ -52,14 +43,8 @@ function | fnApply:[...args]:thisArg
                 cases, you can just omit this parameter to call the function in the components scope, just as if you
                 were calling it with the _call syntax_ (`method()`) from the template. ngx-function-expression always
                 infers the component instance as thisArg, if you don't specify it otherwise.
-  
-**Special Cases for Simple Functions:**
-* If your function doesn't take any arguments, you can **omit** the argument array. If you want to use the `thisArg`,
-  you can either pass undefined/null or an empty tuple as arguments in that case.
-* If your function takes exactly one _non-array_ argument, you can pass this argument directly without adding it to a
-  tuple, like `method | fnApply:arg`.
 
-Here's a short summary of how you can achieve exactly the call you want by just using the basic syntax:
+### Short summary on how to achieve your goal
 
 <table>
     <tr>
@@ -80,87 +65,47 @@ Here's a short summary of how you can achieve exactly the call you want by just 
     </tr>
 </table>
 
-The last call feels a bit clunky, right? That's where advanced features come into place..
-
-## Advanced Syntax
-
-There are two pipes to simplify the usage of ngx-function expression:
-
-### Working with Observables
-
-Working with observables in your templates is state of the art and thus very common. You're probably already 
-familiar with the AsyncPipe provided by @angular/common. That's why I decided to build on the async pipe and add a
-`fnApplyAsync` pipe in 2.x. This works exactly like `fnApply`, but takes observables for each argument instead of
-directly passing the argument. The typings are automatically generated and validated.
-
-Whenever one of the input observables fires, the output is adjusted. Exactly like the AsyncPipe, this should be used
-in combination with [ChangeDetectionStrategy.OnPush](https://angular.io/api/core/ChangeDetectorRef#usage-notes),
-to reduce the component's work to a minimum.
-
-By using the `fnApplyAsync` pipe you can simplify your code as follows:
-
-`{{pow | fnApply:[(base$ | async), (exponent$ | async)]}}`  
-to  
-`{{pow | fnApplyAsync:[base$, exponent$]}}`
-
-While this is a nice simplification and probably cleaning up your templates quite a bit, it is _not necessary_ to write
-code like this. You can always use the basic syntax or the one that works best for you and your code style.
-
-### Calling Instance Methods on Your Data
-
-As you've seen before, you can call methods on any object in your scope with the basic syntax:  
-`{{obj.getName | fnApply:[]:obj}}`
-
-What's bothering is that you have to specify the reference object twice - once to get a reference to the method, and
-then again to set it as the correct `this` argument. This is not only hardly readable, but is also very easy to 
-forget the last parameter and thus getting wrong results, which are frustrating to debug.
-
-To simplify this experience and save you some precious debugging time, there's another syntax to directly call a method
-on a given reference object: `fnMethod`. You can use it like this:
-
-`{{obj | fnMethod:'getName':[]}}` _(of course, the empty argument list is optional)_
-
-As you type, your IDE will automatically list possible public methods, automatically extracted from the reference
-objects type. Even with this syntax, your arguments and return type will be type-checked and result in a type-safe
-template. While this is not necessarily shorter, I think it's way easier to read and understand what happens in this
-example, because the syntax is more similar to a normal method call.
+***
 
 ## Examples
 
-### Applying Pure Functions in the Template
+### Applying Component Methods in the Template
 ```ts
 @Component({
-  template: '{{pow | fnApply:[3, 2]}}, {{math_pow | fnApply:[4, 2]}}' // will render '9, 16'
+  template: '{{pow | fnApply:[3, 2]}}' // will render '9'
 })
 class TestComponent {
-    public math_pow = Math.pow;
-    
-    pow(base: number, exponent: number): number {
+    public pow(base: number, exponent: number): number {
         return Math.pow(base, exponent);
     }
 }
 ```
 
 Obviously, this could also be achieved by implementing a PowerPipe or precalculating the values in the component
-rather than in the template, and, most of the time, this is exactly what you _should_ do!  
-But as I've seen in multiple projects, people _will_ use component methods in the template - and sometimes it's
-even the cleanest or best way in my opinion.
+rather than in the template, and, most of the time, this is exactly what you _should_ do!
+
+But in reality, people will not write a pipe for every operation, or some methods are better contained in a component to access the context of that component.
 
 ### Dynamically Creating a Stream of Data
+
+As with any Angular pipe, you can chain them together to receive exactly the results you want.
+
 ```ts
 @Component({
-  template: '<i *ngIf="hasEditPermissions | fnApply | async" class="fa fa-pencil" (click)="edit()">'
+  template: `Explosion in {{createCountdown | fnApply | async}}`
 })
-class TestComponent {    
-    hasEditPermissions(): Observable<boolean> {
-        return this.user.permissions$.pipe(map(permissions => permissions.edit));
-    }
+class TestComponent {
+  createCountdown(): Observable<number> {
+    return interval(1000).pipe(take(5), map(i => 5 - i));
+  }
 }
 ```
 
-When looking at this example, note that using `*ngIf="hasEditPermissions()"` would result in the AsyncPipe
-subscribing to a whole new observable in every tick. Just imagine you have some XHR request or costly computations
-in the observable you're subscribing to...
+When looking at this example, note that using `{{createCountdown() | async}}` would result in the AsyncPipe
+subscribing to a whole new observable in every tick, keeping the countdown on 5 forever.  
+Using fnApply will call the method exactly once and then listen to changes on the returned observable using AsyncPipe.
+
+Just imagine you have some XHR request or costly computations in the observable you're subscribing to...
 
 ### Calling Instance Methods
 ```ts
@@ -174,25 +119,97 @@ class TestComponent {
 }
 ```
 
-### Working with Returned Observables
+***
 
-As with any Angular pipe, you can chain them together to receive exactly the results you want.
+## Syntactic Sugar
+
+### Special Cases for Simple Functions:
+
+* If your function doesn't take any arguments, you can **omit** the argument array. If you want to use the `thisArg`,
+  you can either pass undefined/null or an empty tuple as arguments in that case.
+* If your function takes exactly one _non-array_ argument, you can pass this argument directly without adding it to a
+  tuple, like `method | fnApply:arg`.
+
+### Calling Instance Methods on Your Data
+
+As you've seen before, you can call methods on any object in your scope with the basic syntax:  
+`{{obj.getName | fnApply:[]:obj}}`
+
+What's bothering is that you have to specify the reference object twice - once to get a reference to the method, and
+then again to set it as the correct `this` argument. This is not only hardly readable, but is also very easy to
+forget the last parameter and thus getting wrong results, which are frustrating to debug.
+
+To simplify this experience and save you some precious debugging time, there's another syntax to directly call a method
+on a given reference object: `fnMethod`. You can use it like this:
+
+`{{obj | fnMethod:'getName':[]}}` _(of course, the empty argument list is optional)_
+
+As you type, your IDE will automatically list possible public methods, automatically extracted from the reference
+objects type. Even with this syntax, your arguments and return type will be type-checked and result in a type-safe
+template. While this is not necessarily shorter, I think it's way easier to read and understand what happens in this
+example, because the syntax is more similar to a normal method call.
+
+***
+
+## Advantages over other solutions
+
+### Component-scoped method calls
+
+When using fnApply on a component method, the library will automatically bind the method to your component instance.
+This can simplify several use-cases where other solutions are overly verbose or even impossible, because data is only available in that component.
+
+**Example:**
 
 ```ts
 @Component({
-  template: `Explosion in {{createCountdown | fnApply | async}}`
+  template: `<div *ngFor="let listItem of list"
+                  [class.selected]="isSelected | fnApply:listItem"
+                  (click)="toggle(listItem)">`
 })
-class TestComponent {    
-    createCountdown(): Observable<number> {
-        return interval(1000);
+class ListComponent {
+    public list: ListItem[];
+    private selectionModel: Set<ListItem>;
+    
+    isSelected(listItem: ListItem): boolean {
+        return this.selectionModel.has(listItem);
+    }
+    
+    toggle(listItem: ListItem): void {
+        if (this.isSelected(listItem)) {
+            this.selectionModel.delete(listItem);
+        } else {
+            this.selectionModel.add(listItem);
+        }
     }
 }
 ```
 
+### Type-safe template usage
+
+ngx-function-expression will always try to infer the parameter types and the return type of your given function, allowing you to write type-safe templates.
+
+**Example:**
+
+```ts
+@Component({
+  template: `
+    {{(add | fnApply:[1, 'Carl'])}}  // Won't compile, because add expects number arguments
+    {{(add | fnApply:[1, 2])}}       // Works fine
+  `
+})
+class ListComponent {
+    public add(l: number, r: number) {
+      return l + r;
+    }
+}
+```
+
+***
+
 ## Get Started!
 
 1. Run `npm install ngx-function-expression`.
-1. Add the `FunctionExpressionModule` to your application and use the `fnApply`, `fnApplyAsync` and `fnMethod` pipes
+1. Add the `FunctionExpressionModule` to your application and use the `fnApply` and `fnMethod` pipes
    in your templates.
 
 ## Further Questions

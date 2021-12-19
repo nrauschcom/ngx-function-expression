@@ -6,4 +6,3 @@ export * from './lib/fn.module';
 
 export * from './lib/fn-apply.pipe';
 export * from './lib/fn-method.pipe';
-export * from './lib/fn-apply-async.pipe';
