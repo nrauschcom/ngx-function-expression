@@ -1,5 +1,8 @@
 # Changelog
 
+### Version 16.0
+ - updated dependencies
+
 ### Version 13.1
  - **breaking:** removed fnCall, use fnApply instead
  - **breaking:** removed fnApplyAsync
