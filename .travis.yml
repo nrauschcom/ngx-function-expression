@@ -9,7 +9,7 @@ cache:
   directories:
   - "./node_modules"
 install:
-- npm install
+- npm install --legacy-peer-deps
 script:
 - ng build --config production
 - npm run coveralls
