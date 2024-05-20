@@ -1,9 +1,9 @@
+os: linux
 dist: trusty
-sudo: false
 
 language: node_js
 node_js:
-  - '18'
+  - lts
 
 addons:
   chrome: stable
@@ -16,4 +16,5 @@ install:
   - npm install
 
 script:
+  - ng build --config production
   - npm run coveralls
