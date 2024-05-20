@@ -27,7 +27,8 @@ class TestClass {
 describe('Pipe: fnMethod', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HostComponent, FnMethodPipe]
+      declarations: [HostComponent],
+      imports: [FnMethodPipe]
     });
   });
 

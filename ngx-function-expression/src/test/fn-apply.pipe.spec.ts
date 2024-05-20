@@ -9,7 +9,7 @@ describe('Pipe: fnApply', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FnApplyPipe]
+      imports: [FnApplyPipe]
     });
     changeDetectorRef = new SpyChangeDetectorRef() as ChangeDetectorRef;
     pipe = new FnApplyPipe(changeDetectorRef);

@@ -50,9 +50,9 @@ describe('Usage in templates', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        TestHostComponent, TrivialHostComponent, SimpleTestHostComponent,
-        FnApplyPipe
-      ]
+        TestHostComponent, TrivialHostComponent, SimpleTestHostComponent
+      ],
+      imports: [FnApplyPipe]
     }).compileComponents();
   });
 
