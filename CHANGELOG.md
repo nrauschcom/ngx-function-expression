@@ -1,5 +1,8 @@
 # Changelog
 
+### Version 17.0
+ - pipes can now be imported standalone instead of the whole module
+
 ### Version 16.0
  - updated dependencies
 

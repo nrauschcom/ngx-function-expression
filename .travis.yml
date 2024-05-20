@@ -1,20 +1,26 @@
 os: linux
-dist: trusty
-
+dist: focal
 language: node_js
 node_js:
-  - lts
-
+- lts
 addons:
   chrome: stable
-
 cache:
   directories:
-    - ./node_modules
-
+  - "./node_modules"
 install:
-  - npm install
-
+- npm install
 script:
-  - ng build --config production
-  - npm run coveralls
+- ng build --config production
+- npm run coveralls
+before_deploy:
+- cd dist/ngx-function-expression
+deploy:
+  provider: npm
+  email: rausch.nico@gmail.com
+  api_key:
+    secure: AdmbJUEB1nqv/meXrzMvwYQFcq6eqZrd4ATj65QLEN++F8X/ySr5AReg/49/iYqk8wIUW9aD9UnPCG0JeicrMtV4R/3SAw3weId+6KDrQWJWQ9BsAhANCB54XvAphrrwj5KRDC0+ZWBwxsNA3toapGJUMIhgMr3hDSEnEz9fMZvNz6FPYGYiN8sT5cK22WwzN+1CaozqGXWWeIhsi/3TdqKsqI0bmZIXVkaWcRTzJHkzd+uAcArIj5Y4GuGHPah5gc0LXQ/PNBCNFYazyGX2A54MPd2gtAvxX4VzcVhVrjauMof6s7v5Okust7uk2DdN7GGw2H0YgieRWstfhgRtbnSS6M4BpMRPmdXW3ceW7jV4kROfLQpS8omfwpKNFLIDoXMqED+EwjNsPlHrncMaYND03O/sju1xTSn22KZp4HRybl7Jv/XbuicISTEGJj7dDu/7UQudwZ/3mMkG48Mw8FQDRb+M18knoZJ8qip3WeLotcN4Fx/6wifas1zNjobXqtPfIjRSs7bgLVtwGmWoGaVcErrsxZhfzAvK9Me3vgSxqYvWtuHk7OO/2otsfPytats1X63XJJT93CbuSHwhb7qnbh/KYVf3dA4pv916KyhL2qMWgcqzfjVYVvlTbPEQIRBwmHMo0/U7P6Ipd3wBiFl8pypdJCrp9GWojKsfXQA=
+  on:
+    repo: nrauschcom/ngx-function-expression
+    branch: main
+  skip_cleanup: 'true'
