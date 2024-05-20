@@ -1,16 +1,17 @@
 import {TestBed} from "@angular/core/testing";
 import {SpyChangeDetectorRef} from "./spies";
 import {FnApplyPipe} from "../lib/fn-apply.pipe";
+import {ChangeDetectorRef} from "@angular/core";
 
 describe('Pipe: fnApply', () => {
   let pipe: FnApplyPipe;
-  let changeDetectorRef: any;
+  let changeDetectorRef: ChangeDetectorRef;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [FnApplyPipe]
     });
-    changeDetectorRef = new SpyChangeDetectorRef();
+    changeDetectorRef = new SpyChangeDetectorRef() as ChangeDetectorRef;
     pipe = new FnApplyPipe(changeDetectorRef);
   });
 

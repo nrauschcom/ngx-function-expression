@@ -13,7 +13,7 @@ import {
 export class TrivialHostComponent {
   function: UnparametrizedFunction;
 
-  setExpression<F extends UnparametrizedFunction>(fn: UnparametrizedFunction) {
+  setExpression(fn: UnparametrizedFunction) {
     this.function = fn;
   }
 }
@@ -23,10 +23,11 @@ export class TrivialHostComponent {
 })
 export class TestHostComponent {
   function: ParametrizedFunction;
+  // eslint-disable-next-line
   args: FunctionParameters<any>;
   thisArg: unknown;
 
-  setExpression<F extends ParametrizedFunction>(fn: F, args: FunctionParameters<F>, thisArg: any = undefined) {
+  setExpression<F extends ParametrizedFunction>(fn: F, args: FunctionParameters<F>, thisArg: unknown = undefined) {
     this.function = fn;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     this.args = args;

@@ -19,7 +19,8 @@ type Methods<C> = UnparametrizedMethods<C> | ParametrizedMethods<C>;
 
 @Pipe({
   name: 'fnMethod',
-  pure: true
+  pure: true,
+  standalone: true
 })
 export class FnMethodPipe implements PipeTransform {
   constructor() {}

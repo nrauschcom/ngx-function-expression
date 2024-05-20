@@ -6,7 +6,7 @@ import {FnMethodPipe} from "../lib/fn-method.pipe";
   template: `{{ referenceObject | fnMethod:methodName:$any(args) }}`
 })
 export class HostComponent {
-  public referenceObject: any;
+  public referenceObject: unknown;
   public methodName: string;
   public args: unknown[];
 
@@ -19,6 +19,7 @@ export class HostComponent {
 
 class TestClass {
   public returnThis(...args: unknown[]): TestClass {
+    args.toString();
     return this;
   }
 }

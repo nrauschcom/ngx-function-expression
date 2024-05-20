@@ -3,8 +3,11 @@ import {FnApplyPipe} from "./fn-apply.pipe";
 import {FnMethodPipe} from "./fn-method.pipe";
 
 @NgModule({
-  declarations: [FnApplyPipe, FnMethodPipe],
-  imports: [],
+  declarations: [],
+  imports: [
+    FnApplyPipe,
+    FnMethodPipe
+  ],
   exports: [FnApplyPipe, FnMethodPipe]
 })
 export class FunctionExpressionModule {

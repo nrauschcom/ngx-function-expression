@@ -5,7 +5,8 @@ import {_fnApplyHelper} from "./fn-apply-helper";
 
 @Pipe({
   name: 'fnApply',
-  pure: true
+  pure: true,
+  standalone: true
 })
 export class FnApplyPipe implements PipeTransform {
   constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}

@@ -1,11 +1,11 @@
 {
   "name": "ngx-function-expression",
-  "version": "16.0.0",
+  "version": "17.0.0",
   "description": "Performant calls to pure functions in Angular Templates / Bindings",
   "author": {
     "name": "Nico Rausch",
     "email": "rausch.nico@gmail.com",
-    "url": "https://nrausch.com"
+    "url": "https://nrausch.dev"
   },
   "repository": {
     "type": "git",
@@ -29,8 +29,5 @@
   "peerDependencies": {
     "@angular/common": ">= 12.0.0",
     "@angular/core": ">= 12.0.0"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
   }
 }
