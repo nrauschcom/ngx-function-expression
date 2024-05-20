@@ -1,6 +1,6 @@
 {
   "name": "ngx-function-expression",
-  "version": "17.0.0",
+  "version": "17.0.1",
   "description": "Performant calls to pure functions in Angular Templates / Bindings",
   "author": {
     "name": "Nico Rausch",
