@@ -11,7 +11,7 @@ cache:
 install:
 - npm install --legacy-peer-deps
 script:
-- ng build --config production
+- ng build --configuration production
 - npm run coveralls
 before_deploy:
 - cd dist/ngx-function-expression
